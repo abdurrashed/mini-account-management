@@ -8,7 +8,7 @@ namespace MiniAccountManagement.Web.Domain.Entities
 {
     public class ModulePermission
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string RoleId { get; set; } = "";
         public string ModuleName { get; set; } = "";
         public bool CanView { get; set; }

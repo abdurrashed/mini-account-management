@@ -8,10 +8,10 @@ namespace MiniAccountManagement.Web.Domain.Entities
 {
     public class ChartOfAccount
     {
-        public int AccountId { get; set; }
+        public Guid Id { get; set; }
         public string AccountName { get; set; } = "";
         public string AccountCode { get; set; } = "";
-        public int? ParentAccountId { get; set; }
+        public Guid? ParentAccountId { get; set; }
         public string AccountType { get; set; } = "";
         public string Description { get; set; } = "";
 

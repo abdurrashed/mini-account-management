@@ -12,7 +12,7 @@ using MiniAccountManagement.Web.Infrastructure;
 namespace MiniAccountManagement.Web.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250620152227_Identity-Migration")]
+    [Migration("20250620165046_Identity-Migration")]
     partial class IdentityMigration
     {
         /// <inheritdoc />
