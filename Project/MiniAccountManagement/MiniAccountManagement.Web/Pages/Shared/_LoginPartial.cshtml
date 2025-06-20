@@ -3,15 +3,15 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav d-flex align-items-center">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-        </li>
-        <li class="nav-item">
-            <form method="post" asp-page="/Account/Logout" id="logoutForm" class="d-inline">
-                <button type="submit" class="nav-link btn btn-link text-dark p-0" style="display:inline; cursor:pointer;">
+        <li class="nav-item d-flex align-items-center">
+            <span class="text-dark me-3" style="font-size: 1.1rem; font-weight: normal; text-decoration: none;">
+                Hello @User.Identity?.Name!
+            </span>
+            <form method="post" asp-page="/Account/Logout" id="logoutForm" class="m-0">
+                <button type="submit" class="btn btn-link text-dark p-0" style="font-size: 1.1rem; font-weight: normal; text-decoration: none; cursor:pointer;">
                     Logout
                 </button>
             </form>
@@ -20,10 +20,11 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" asp-page="/Account/Register" style="font-weight: normal; text-decoration: none;">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" asp-page="/Account/Login" style="font-weight: normal; text-decoration: none;">Login</a>
         </li>
     }
 </ul>
+
