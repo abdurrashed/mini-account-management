@@ -1,4 +1,53 @@
 ﻿@page
-@model MiniAccountManagement.Web.Pages.Account.RegisterModel
+@model RegisterModel
 @{
+    ViewData["Title"] = "Register";
+}
+
+<div class="card shadow-sm" style="max-width: 500px; margin: 20px auto; padding: 20px; border-radius: 10px;">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        <!-- UserName -->
+        <div class="form-group mb-3">
+            <label asp-for="Input.UserName" class="form-label">User Name</label>
+            <input asp-for="Input.UserName" class="form-control" required />
+            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group mb-3">
+            <label asp-for="Input.Email" class="form-label">Email</label>
+            <input asp-for="Input.Email" type="email" class="form-control" required />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-3">
+            <label asp-for="Input.Password" class="form-label">Password</label>
+            <input asp-for="Input.Password" type="password" class="form-control" required />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group mb-3">
+            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" required />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+     
+
+        <button type="submit" class="btn btn-primary btn-block w-100">Register</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
