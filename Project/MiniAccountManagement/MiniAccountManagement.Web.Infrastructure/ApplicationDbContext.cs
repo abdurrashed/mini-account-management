@@ -14,9 +14,11 @@ namespace MiniAccountManagement.Web.Infrastructure
 
 
 
-       
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+             : base(options)
+        {
+        }
 
 
 

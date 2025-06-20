@@ -1,49 +1,96 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using MiniAccountManagement.Web.Infrastructure.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MiniAccountManagement.Web</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MiniAccountManagement.Web.styles.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Mini Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MiniAccountManagement.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                       
+    <header class="bg-light shadow-sm mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" asp-page="/Index">Mini Account</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Dashboard/Index">Dashboard</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/ChartOfAccounts/Index">Chart of Accounts</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Vouchers</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-page="/Voucher/Journal">Journal Voucher</a></li>
+                            <li><a class="dropdown-item" asp-page="/Voucher/Payment">Payment Voucher</a></li>
+                            <li><a class="dropdown-item" asp-page="/Voucher/Receipt">Receipt Voucher</a></li>
+                        </ul>
+                    </li>
+
+                    @if (isAdmin)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Admin Panel</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Admin/Users">Manage Users</a></li>
+                                <li><a class="dropdown-item" asp-page="/Admin/Roles">Manage Roles</a></li>
+                                <li><a class="dropdown-item" asp-page="/Admin/ModuleAccess">Access Rights</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item d-flex align-items-center me-3">
+                            <i class="bi bi-person-circle me-1 text-secondary"></i>
+                            <span class="text-dark">@User.Identity?.Name</span>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-page="/Account/Logout" class="m-0">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Account/Register">Register</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - MiniAccountManagement.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <main class="container pb-5">
+        @RenderBody()
+    </main>
+
+    <footer class="text-center bg-light border-top py-2 small">
+        &copy; @DateTime.Now.Year - <strong>Qtec Solution Limited</strong> |
+        <a href="https://www.qtecsolution.com" target="_blank">www.qtecsolution.com</a>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
