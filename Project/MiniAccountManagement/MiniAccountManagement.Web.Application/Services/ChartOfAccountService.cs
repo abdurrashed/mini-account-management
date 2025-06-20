@@ -4,13 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MiniAccountManagement.Web.Domain.Entities;
-using MiniAccountManagement.Web.Domain.Infrastructure;
 using MiniAccountManagement.Web.Domain.Services;
+using MiniAccountManagement.Web.Infrastructure;
+
+
 
 namespace MiniAccountManagement.Web.Application.Services
 {
     public class ChartOfAccountService : IChartOfAccountService
     {
+
+        private readonly ApplicationDbContext _context;
+
+        public ChartOfAccountService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public Task CreateAccountAsync(ChartOfAccount account)
         {
             throw new NotImplementedException();

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MiniAccountManagement.Web.Domain\MiniAccountManagement.Web.Domain.csproj" />
+    <ProjectReference Include="..\MiniAccountManagement.Web.Infrastructure\MiniAccountManagement.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

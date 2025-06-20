@@ -10,6 +10,14 @@ namespace MiniAccountManagement.Web.Infrastructure.Infrastructure
 {
     public class ChartOfAccountRepository : IChartOfAccountRepository
     {
+        private readonly ApplicationDbContext _context;
+
+        public ChartOfAccountRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+
         public Task CreateAsync(ChartOfAccount account)
         {
             throw new NotImplementedException();

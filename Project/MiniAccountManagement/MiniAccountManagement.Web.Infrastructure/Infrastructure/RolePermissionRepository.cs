@@ -10,6 +10,13 @@ namespace MiniAccountManagement.Web.Infrastructure.Infrastructure
 {
     public class RolePermissionRepository : IRolePermissionRepository
     {
+
+        private readonly ApplicationDbContext _context;
+
+        public RolePermissionRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public Task AssignAsync(ModulePermission permission)
         {
             throw new NotImplementedException();

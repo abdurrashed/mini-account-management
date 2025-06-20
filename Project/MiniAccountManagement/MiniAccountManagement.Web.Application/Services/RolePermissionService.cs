@@ -10,6 +10,9 @@ namespace MiniAccountManagement.Web.Application.Services
 {
     public class RolePermissionService : IRolePermissionRepository
     {
+
+
+
         public Task AssignAsync(ModulePermission permission)
         {
             throw new NotImplementedException();
@@ -19,7 +22,7 @@ namespace MiniAccountManagement.Web.Application.Services
         {
             throw new NotImplementedException();
         }
-
+         
         public Task RemoveAsync(int permissionId)
         {
             throw new NotImplementedException();
