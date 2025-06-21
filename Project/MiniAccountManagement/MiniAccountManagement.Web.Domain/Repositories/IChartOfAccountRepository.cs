@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MiniAccountManagement.Web.Domain.Entities;
 
-namespace MiniAccountManagement.Web.Domain.Infrastructure
+namespace MiniAccountManagement.Web.Domain.Repositories
 {
     public interface IChartOfAccountRepository
     {
@@ -13,7 +13,7 @@ namespace MiniAccountManagement.Web.Domain.Infrastructure
         Task<List<ChartOfAccount>> GetAllAsync();
         Task CreateAsync(ChartOfAccount account);
         Task UpdateAsync(ChartOfAccount account);
-        Task DeleteAsync(int accountId);
+        Task DeleteAsync(Guid Id);
     
     }
 }

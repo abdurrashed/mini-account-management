@@ -13,6 +13,6 @@ namespace MiniAccountManagement.Web.Domain.Services
         Task<List<ChartOfAccount>> GetAllAccountsAsync();
         Task CreateAccountAsync(ChartOfAccount account);
         Task UpdateAccountAsync(ChartOfAccount account);
-        Task DeleteAccountAsync(int accountId);
+        Task DeleteAccountAsync(Guid Id);
     }
 }

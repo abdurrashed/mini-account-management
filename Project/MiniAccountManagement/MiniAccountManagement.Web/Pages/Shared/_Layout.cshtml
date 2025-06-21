@@ -31,8 +31,19 @@
                         <a class="nav-link" asp-page="/Dashboard/Index">Dashboard</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/ChartOfAccounts/Index">Chart of Accounts</a>
+                    
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Chart of Accounts</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Accounts/Index">Accounts List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Accounts/Create"> Create Account</a>
+                            </li>
+                            
+                        </ul>
                     </li>
 
                     <li class="nav-item dropdown">

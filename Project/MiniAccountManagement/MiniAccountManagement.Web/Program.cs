@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MiniAccountManagement.Web.Application.Services;
+using MiniAccountManagement.Web.Domain.Repositories;
+using MiniAccountManagement.Web.Domain.Services;
 using MiniAccountManagement.Web.Infrastructure;
 using MiniAccountManagement.Web.Infrastructure.Identity;
+using MiniAccountManagement.Web.Infrastructure.Repositories;
 using System;
 using System.Reflection;
 
@@ -25,6 +29,12 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
+
+
+builder.Services.AddScoped<IChartOfAccountRepository, ChartOfAccountRepository>();
+builder.Services.AddScoped<IChartOfAccountService, ChartOfAccountService>();
+
+
 
 var app = builder.Build();
 
