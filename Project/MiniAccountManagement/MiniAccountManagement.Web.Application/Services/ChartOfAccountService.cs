@@ -9,9 +9,6 @@ using MiniAccountManagement.Web.Domain.Services;
 using MiniAccountManagement.Web.Infrastructure;
 using MiniAccountManagement.Web.Infrastructure.Repositories;
 
-
-
-
 namespace MiniAccountManagement.Web.Application.Services
 {
     public class ChartOfAccountService : IChartOfAccountService
@@ -36,9 +33,9 @@ namespace MiniAccountManagement.Web.Application.Services
 
         public async Task<List<ChartOfAccount>> GetAllAsync() => await _repository.GetAllAsync();
 
-        public Task UpdateAccountAsync(ChartOfAccount account)
+        public async Task UpdateAccountAsync(ChartOfAccount account)
         {
-            throw new NotImplementedException();
+            await _repository.UpdateAsync(account);
         }
     }
 }

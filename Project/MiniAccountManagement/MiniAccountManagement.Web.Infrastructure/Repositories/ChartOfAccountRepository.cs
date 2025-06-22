@@ -77,9 +77,24 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
 
 
 
-        public Task UpdateAsync(ChartOfAccount account)
+        public async Task UpdateAsync(ChartOfAccount account)
         {
-            throw new NotImplementedException();
+            var parameters = new[]
+            {
+        new SqlParameter("@Action", "Update"),
+        new SqlParameter("@Id", account.Id),
+        new SqlParameter("@AccountName", account.AccountName),
+        new SqlParameter("@AccountCode", account.AccountCode),
+        new SqlParameter("@ParentAccountId", (object?)account.ParentAccountId ?? DBNull.Value),
+        new SqlParameter("@AccountType", account.AccountType),
+        new SqlParameter("@Description", (object?)account.Description ?? DBNull.Value), // ← FIXED
+    };
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC sp_ManageChartOfAccounts @Action, @Id, @AccountName, @AccountCode, @ParentAccountId, @AccountType, @Description",
+                parameters
+            );
         }
+
     }
 }
