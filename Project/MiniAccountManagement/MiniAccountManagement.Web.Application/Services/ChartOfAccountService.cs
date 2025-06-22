@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Identity.Client;
 using MiniAccountManagement.Web.Domain.Entities;
 using MiniAccountManagement.Web.Domain.Repositories;
 using MiniAccountManagement.Web.Domain.Services;
@@ -26,9 +27,9 @@ namespace MiniAccountManagement.Web.Application.Services
             await _repository.CreateAsync(account);
         }
 
-        public Task DeleteAccountAsync(Guid Id)
+        public async Task DeleteAccountAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            await _repository.DeleteAsync(Id);
         }
 
         public async Task<List<ChartOfAccount>> GetAllAsync() => await _repository.GetAllAsync();

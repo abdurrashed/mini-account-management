@@ -41,10 +41,23 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
             );
         }
 
-        public Task DeleteAsync(Guid id)
+     
+        public async Task DeleteAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            var parameters = new[]
+            {
+            new SqlParameter("@Action", "Delete"),
+            new SqlParameter("@Id", Id),
+            new SqlParameter("@AccountName", DBNull.Value),
+            new SqlParameter("@AccountCode", DBNull.Value),
+            new SqlParameter("@ParentAccountId", DBNull.Value),
+            new SqlParameter("@AccountType", DBNull.Value),
+            new SqlParameter("@Description", DBNull.Value),
+        };
+
+            await _context.Database.ExecuteSqlRawAsync("EXEC sp_ManageChartOfAccounts @Action, @Id, @AccountName, @AccountCode, @ParentAccountId, @AccountType, @Description", parameters);
         }
+        
 
         public async Task<List<ChartOfAccount>> GetAllAsync()
         {

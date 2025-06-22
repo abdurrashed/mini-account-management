@@ -20,5 +20,16 @@ namespace MiniAccountManagement.Web.Pages.Accounts
         {
             Accounts = await _service.GetAllAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(Guid id)
+        {
+            
+
+            await _service.DeleteAccountAsync(id);
+
+            return RedirectToPage(); 
+        }
+
+
     }
 }

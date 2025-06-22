@@ -1,0 +1,34 @@
+﻿@model (MiniAccountManagement.Web.Domain.Entities.ChartOfAccount Account, int Level)
+
+@{
+    var account = Model.Account;
+    var level = Model.Level;
+    var indent = new string('-', level * 2); 
+    var rowClass = level == 0 ? "fw-bold text-primary" : "text-secondary";
+    var paddingClass = level == 0 ? "" : $"ps-{level * 2}";
+}
+
+<tr class="@(level > 0 ? "bg-light border-start border-primary border-3" : "border-bottom")">
+    <td class="@rowClass @paddingClass">@indent @account.AccountCode</td>
+    <td class="@rowClass">@account.AccountName</td>
+    <td><span class="badge bg-@(level == 0 ? "primary" : "secondary") rounded-pill">@account.AccountType</span></td>
+    <td class="text-muted small">@account.Description</td>
+    <td class="text-center">
+        <div class="btn-group" role="group">
+            <a asp-page="Edit" asp-route-id="@account.Id" class="btn btn-outline-warning btn-sm">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('@account.Id')">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </div>
+    </td>
+</tr>
+
+@if (account.Children != null && account.Children.Count > 0)
+{
+    foreach (var child in account.Children)
+    {
+        @Html.Partial("_AccountRow", (child, level + 1))
+    }
+}
