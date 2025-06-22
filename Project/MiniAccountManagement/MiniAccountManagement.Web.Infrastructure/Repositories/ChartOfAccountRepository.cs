@@ -24,15 +24,16 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
 
         public async Task CreateAsync(ChartOfAccount account)
         {
+            var id = Guid.NewGuid();
             var parameters = new[]
             {
                 new SqlParameter("@Action", "Create"),
-                new SqlParameter("@Id", System.Data.SqlDbType.Int) { Value = DBNull.Value },
+                new SqlParameter("@Id", id),
                 new SqlParameter("@AccountName", account.AccountName),
                 new SqlParameter("@AccountCode", account.AccountCode),
                 new SqlParameter("@ParentAccountId", (object?)account.ParentAccountId ?? DBNull.Value),
                 new SqlParameter("@AccountType", account.AccountType),
-                new SqlParameter("@Description", account.Description),
+                 new SqlParameter("@Description", (object?)account.Description ?? DBNull.Value)
             };
 
             await _context.Database.ExecuteSqlRawAsync("EXEC sp_ManageChartOfAccounts @Action, @Id, @AccountName, @AccountCode, @ParentAccountId, @AccountType, @Description", parameters);
@@ -42,6 +43,8 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+     
 
         public async Task<List<ChartOfAccount>> GetAllAsync()
         {
@@ -72,7 +75,7 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
         }
 
 
-        
+
 
         public Task UpdateAsync(ChartOfAccount account)
         {

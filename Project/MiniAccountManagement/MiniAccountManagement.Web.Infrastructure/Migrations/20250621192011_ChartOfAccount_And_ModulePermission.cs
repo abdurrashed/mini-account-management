@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MiniAccountManagement.Web.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class chartofaccount_And_ModulePerMission_Migrations : Migration
+    public partial class ChartOfAccount_And_ModulePermission : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

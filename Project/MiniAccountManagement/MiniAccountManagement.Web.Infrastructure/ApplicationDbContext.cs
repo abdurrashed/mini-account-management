@@ -13,8 +13,8 @@ namespace MiniAccountManagement.Web.Infrastructure
     public class ApplicationDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
 
-        public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
-        public DbSet<ModulePermission> ModulePermissions { get; set; }
+       public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
+       public DbSet<ModulePermission> ModulePermissions { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
              : base(options)
         {

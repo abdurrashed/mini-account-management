@@ -12,8 +12,8 @@ using MiniAccountManagement.Web.Infrastructure;
 namespace MiniAccountManagement.Web.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250620165638_chartofaccount_And_ModulePerMission_Migrations")]
-    partial class chartofaccount_And_ModulePerMission_Migrations
+    [Migration("20250621194812_UpdateChartOfAccount")]
+    partial class UpdateChartOfAccount
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -150,7 +150,6 @@ namespace MiniAccountManagement.Web.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ParentAccountId")

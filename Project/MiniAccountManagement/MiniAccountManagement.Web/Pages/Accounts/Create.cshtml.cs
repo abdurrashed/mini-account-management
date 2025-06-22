@@ -22,7 +22,7 @@ namespace MiniAccountManagement.Web.Pages.Accounts
 
         public async Task OnGetAsync()
         {
-            var accounts = await _service.GetAllAccountsAsync();
+            var accounts = await _service.GetAllAsync();
             ParentAccounts = FlattenAccounts(accounts);
         }
 

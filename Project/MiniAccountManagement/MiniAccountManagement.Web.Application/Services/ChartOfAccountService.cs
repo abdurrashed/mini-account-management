@@ -34,10 +34,7 @@ namespace MiniAccountManagement.Web.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<ChartOfAccount>> GetAllAccountsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<ChartOfAccount>> GetAllAsync() => await _repository.GetAllAsync();
 
         public Task UpdateAccountAsync(ChartOfAccount account)
         {

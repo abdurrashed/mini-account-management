@@ -10,7 +10,7 @@ namespace MiniAccountManagement.Web.Domain.Services
     public interface IChartOfAccountService
     {
 
-        Task<List<ChartOfAccount>> GetAllAccountsAsync();
+        Task<List<ChartOfAccount>> GetAllAsync();
         Task CreateAccountAsync(ChartOfAccount account);
         Task UpdateAccountAsync(ChartOfAccount account);
         Task DeleteAccountAsync(Guid Id);

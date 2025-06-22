@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniAccountManagement.Web.Infrastructure;
 
@@ -11,9 +12,11 @@ using MiniAccountManagement.Web.Infrastructure;
 namespace MiniAccountManagement.Web.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250621192011_ChartOfAccount_And_ModulePermission")]
+    partial class ChartOfAccount_And_ModulePermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,6 +150,7 @@ namespace MiniAccountManagement.Web.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ParentAccountId")
@@ -156,7 +160,7 @@ namespace MiniAccountManagement.Web.Infrastructure.Migrations
 
                     b.HasIndex("ParentAccountId");
 
-                    b.ToTable("ChartOfAccounts", (string)null);
+                    b.ToTable("ChartOfAccounts");
                 });
 
             modelBuilder.Entity("MiniAccountManagement.Web.Domain.Entities.ModulePermission", b =>
@@ -187,7 +191,7 @@ namespace MiniAccountManagement.Web.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ModulePermissions", (string)null);
+                    b.ToTable("ModulePermissions");
                 });
 
             modelBuilder.Entity("MiniAccountManagement.Web.Infrastructure.Identity.ApplicationRole", b =>
