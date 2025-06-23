@@ -55,20 +55,20 @@ namespace MiniAccountManagement.Web.Pages.Account
 
             var user = new ApplicationUser
             {
-                UserName = Input.UserName,
-                Email = Input.Email
+                UserName = Input.UserName.Trim(),
+                Email = Input.Email.Trim()
             };
 
             bool hasError = false;
 
-            var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+            var existingUser = await _userManager.FindByEmailAsync(user.Email);
             if (existingUser != null)
             {
                 ModelState.AddModelError("Input.Email", "This email is already registered.");
                 hasError = true;
             }
 
-            var existingUsername = await _userManager.FindByNameAsync(Input.UserName);
+            var existingUsername = await _userManager.FindByNameAsync(user.UserName);
             if (existingUsername != null)
             {
                 ModelState.AddModelError("Input.UserName", "This username is already taken.");
@@ -76,35 +76,41 @@ namespace MiniAccountManagement.Web.Pages.Account
             }
 
             if (hasError)
-            {
                 return Page();
-            }
 
             var result = await _userManager.CreateAsync(user, Input.Password);
 
             if (result.Succeeded)
             {
-                if (!await _roleManager.RoleExistsAsync(Input.Role))
+                var roleName = Input.Role.Trim();
+
+                var matchedRole = await _roleManager.FindByNameAsync(roleName);
+                if (matchedRole == null)
                 {
-                    await _roleManager.CreateAsync(new ApplicationRole { Name = Input.Role });
+                    ModelState.AddModelError(string.Empty, $"Role '{roleName}' does not exist.");
+                    return Page();
                 }
 
-                var newUser = await _userManager.FindByNameAsync(user.UserName);
-                if (newUser == null)
+                var createdUser = await _userManager.FindByNameAsync(user.UserName);
+                if (createdUser == null)
                 {
                     ModelState.AddModelError(string.Empty, "User creation failed. Please try again.");
                     return Page();
                 }
-                var roleResult = await _userManager.AddToRoleAsync(newUser, Input.Role);
+
+                var roleResult = await _userManager.AddToRoleAsync(createdUser, matchedRole.Name);
                 if (!roleResult.Succeeded)
                 {
                     foreach (var error in roleResult.Errors)
                         ModelState.AddModelError(string.Empty, error.Description);
                     return Page();
                 }
-                await _signInManager.SignInAsync(newUser, isPersistent: false);
 
+                // OPTIONAL: Check if role assigned correctly
+                var userRoles = await _userManager.GetRolesAsync(createdUser);
+                Console.WriteLine($"User '{createdUser.UserName}' assigned roles: {string.Join(", ", userRoles)}");
 
+                await _signInManager.SignInAsync(createdUser, isPersistent: false);
                 return RedirectToPage("/Index");
             }
 
@@ -112,6 +118,5 @@ namespace MiniAccountManagement.Web.Pages.Account
                 ModelState.AddModelError(string.Empty, error.Description);
 
             return Page();
-        }
+        }  }
     }
-}
