@@ -20,14 +20,26 @@ namespace MiniAccountManagement.Web.Pages.Accounts
 
         public List<SelectListItem> ParentAccounts { get; set; } = new();
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (User.IsInRole("Viewer"))
+            {
+                TempData["AccessDenied"] = "You do not have permission to view this page.";
+                return RedirectToPage("/Index");
+            }
             var accounts = await _service.GetAllAsync();
             ParentAccounts = FlattenAccounts(accounts);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if (User.IsInRole("Viewer"))
+            {
+                TempData["AccessDenied"] = "You do not have permission to perform this action.";
+                return RedirectToPage("/Index");
+            }
             if (!ModelState.IsValid) return Page();
 
             await _service.CreateAccountAsync(Account);
