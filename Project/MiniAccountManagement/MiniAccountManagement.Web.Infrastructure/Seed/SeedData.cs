@@ -69,25 +69,30 @@ namespace MiniAccountManagement.Web.Infrastructure.Seed
                 var accountantRole = await roleManager.FindByNameAsync("Accountant");
                 var viewerRole = await roleManager.FindByNameAsync("Viewer");
 
-                var permissions = new List<ModulePermission>
-            {
-                // Admin Full Access
-                NewPermission(adminRole.Id, "ChartOfAccounts", true, true, true, true),
-                NewPermission(adminRole.Id, "VoucherEntry", true, true, true, true),
-                NewPermission(adminRole.Id, "UserManagement", true, true, true, true),
-                NewPermission(adminRole.Id, "RoleManagement", true, true, true, true),
-                NewPermission(adminRole.Id, "PermissionManagement", true, true, true, true),
+ var permissions = new List<ModulePermission>
+{
+    // Admin Full Access
+    NewPermission(adminRole.Id, "ChartOfAccounts", true, true, true, true),
+    NewPermission(adminRole.Id, "VoucherEntry", true, true, false, false), // Only View & Create
+    NewPermission(adminRole.Id, "UserManagement", true, true, true, true),
+    NewPermission(adminRole.Id, "RoleManagement", true, true, true, true),
+   
 
-                // Accountant Limited Access
-                NewPermission(accountantRole.Id, "ChartOfAccounts", true, true, true, false),
-                NewPermission(accountantRole.Id, "VoucherEntry", true, true, true, false),
-                NewPermission(accountantRole.Id, "UserManagement", false, false, false, false),
+    // Accountant Limited Access
+    NewPermission(accountantRole.Id, "ChartOfAccounts", true, true, true, false),
+    NewPermission(accountantRole.Id, "VoucherEntry", true, true, false, false),
+    NewPermission(accountantRole.Id, "UserManagement", false, false, false, false),
+    NewPermission(accountantRole.Id, "RoleManagement", false, false, false, false),
+    
 
-                // Viewer Read-Only
-                NewPermission(viewerRole.Id, "ChartOfAccounts", true, false, false, false),
-                NewPermission(viewerRole.Id, "VoucherEntry", true, false, false, false),
-                NewPermission(viewerRole.Id, "UserManagement", false, false, false, false)
-            };
+    // Viewer Minimal Access
+    NewPermission(viewerRole.Id, "ChartOfAccounts", true, false, false, false),  // Only list/view
+    NewPermission(viewerRole.Id, "VoucherEntry", false, false, false, false),
+    NewPermission(viewerRole.Id, "UserManagement", false, false, false, false),
+    NewPermission(viewerRole.Id, "RoleManagement", false, false, false, false),
+
+};
+
 
                 context.ModulePermissions.AddRange(permissions);
                 await context.SaveChangesAsync();

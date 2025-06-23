@@ -124,42 +124,54 @@
                         <!-- User Management (Admin Only) -->
                         @if (isAdmin)
                         {
+                            <!-- Manage Users (Independent) -->
                             <li class="nav-item mb-1">
-                                <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#adminMenu" role="button" aria-expanded="false">
-                                    <i class="bi bi-shield-lock me-3 fs-5"></i>
-                                    <span class="flex-grow-1">Administration</span>
+                                <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageUsersMenu" role="button" aria-expanded="false">
+                                    <i class="bi bi-people me-3 fs-5"></i>
+                                    <span class="flex-grow-1">Manage Users</span>
                                     <i class="bi bi-chevron-down"></i>
                                 </a>
-                                <div class="collapse" id="adminMenu">
+                                <div class="collapse" id="manageUsersMenu">
                                     <ul class="nav flex-column ms-4 mt-2">
                                         <li class="nav-item">
-                                            <a asp-page="/Admin/Users" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-people me-2"></i>
-                                                <span>Manage Users</span>
-                                            </a>
+                                            <a asp-page="/Admin/Users" class="nav-link text-white px-3 py-1 rounded-3">User List</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a asp-page="/Admin/Roles" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-person-badge me-2"></i>
-                                                <span>Manage Roles</span>
-                                            </a>
+                                            <a asp-page="/Admin/UserCreate" class="nav-link text-white px-3 py-1 rounded-3">Create User</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a asp-page="/Admin/ModuleAccess" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-key me-2"></i>
-                                                <span>Access Rights</span>
-                                            </a>
+                                            <a asp-page="/Admin/UserRoles" class="nav-link text-white px-3 py-1 rounded-3">Assign Roles</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a asp-page="/Admin/SystemSettings" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-gear me-2"></i>
-                                                <span>System Settings</span>
-                                            </a>
+                                            <a asp-page="/Admin/UserReset" class="nav-link text-white px-3 py-1 rounded-3">Reset Password</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
+
+                            <!-- Manage Roles (Independent) -->
+                            <li class="nav-item mb-1">
+                                <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageRolesMenu" role="button" aria-expanded="false">
+                                    <i class="bi bi-person-badge me-3 fs-5"></i>
+                                    <span class="flex-grow-1">Manage Roles</span>
+                                    <i class="bi bi-chevron-down"></i>
+                                </a>
+                                <div class="collapse" id="manageRolesMenu">
+                                    <ul class="nav flex-column ms-4 mt-2">
+                                        <li class="nav-item">
+                                            <a asp-page="/Admin/Roles" class="nav-link text-white px-3 py-1 rounded-3">Role List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-page="/Admin/RolePermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permissions</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                          
                         }
+
+
                     </ul>
 
                     <hr class="text-white-50 mt-4">
@@ -287,7 +299,7 @@
                                 <div class="ms-3">
                                     <a asp-page="/Accounts/Index" class="nav-link text-white">Account List</a>
                                     <a asp-page="/Accounts/Create" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Create Account</a>
-                                    <a asp-page="/Accounts/Hierarchy" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Account Tree</a>
+                                   
                                 </div>
                             </div>
                         </li>
@@ -311,18 +323,51 @@
 
                     @if (isAdmin)
                     {
+                        <!-- Manage Users (Independent) -->
                         <li class="nav-item mb-1">
-                            <a class="nav-link text-white" data-bs-toggle="collapse" href="#adminMobile">
-                                <i class="bi bi-shield-lock me-2"></i>Administration
+                            <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageUsersMenu" role="button" aria-expanded="false">
+                                <i class="bi bi-people me-3 fs-5"></i>
+                                <span class="flex-grow-1">Manage Users</span>
+                                <i class="bi bi-chevron-down"></i>
                             </a>
-                            <div class="collapse" id="adminMobile">
-                                <div class="ms-3">
-                                    <a asp-page="/Admin/Users" class="nav-link text-white">Manage Users</a>
-                                    <a asp-page="/Admin/Roles" class="nav-link text-white">Manage Roles</a>
-                                    <a asp-page="/Admin/ModuleAccess" class="nav-link text-white">Access Rights</a>
-                                </div>
+                            <div class="collapse" id="manageUsersMenu">
+                                <ul class="nav flex-column ms-4 mt-2">
+                                    <li class="nav-item">
+                                        <a asp-page="/Admin/Users" class="nav-link text-white px-3 py-1 rounded-3">User List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-page="/Admin/UserCreate" class="nav-link text-white px-3 py-1 rounded-3">Create User</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-page="/Admin/UserRoles" class="nav-link text-white px-3 py-1 rounded-3">Assign Roles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-page="/Admin/UserReset" class="nav-link text-white px-3 py-1 rounded-3">Reset Password</a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
+
+                        <!-- Manage Roles (Independent) -->
+                        <li class="nav-item mb-1">
+                            <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageRolesMenu" role="button" aria-expanded="false">
+                                <i class="bi bi-person-badge me-3 fs-5"></i>
+                                <span class="flex-grow-1">Manage Roles</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
+                            <div class="collapse" id="manageRolesMenu">
+                                <ul class="nav flex-column ms-4 mt-2">
+                                    <li class="nav-item">
+                                        <a asp-page="/Admin/Roles" class="nav-link text-white px-3 py-1 rounded-3">Role List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-page="/Admin/RolePermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permissions</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+
                     }
                 </ul>
             </div>
