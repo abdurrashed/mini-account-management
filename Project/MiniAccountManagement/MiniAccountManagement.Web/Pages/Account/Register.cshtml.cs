@@ -89,8 +89,21 @@ namespace MiniAccountManagement.Web.Pages.Account
                     await _roleManager.CreateAsync(new ApplicationRole { Name = Input.Role });
                 }
 
-                await _userManager.AddToRoleAsync(user, Input.Role);
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                var newUser = await _userManager.FindByNameAsync(user.UserName);
+                if (newUser == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User creation failed. Please try again.");
+                    return Page();
+                }
+                var roleResult = await _userManager.AddToRoleAsync(newUser, Input.Role);
+                if (!roleResult.Succeeded)
+                {
+                    foreach (var error in roleResult.Errors)
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    return Page();
+                }
+                await _signInManager.SignInAsync(newUser, isPersistent: false);
+
 
                 return RedirectToPage("/Index");
             }
