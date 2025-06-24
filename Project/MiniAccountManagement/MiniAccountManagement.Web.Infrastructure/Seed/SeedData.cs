@@ -71,22 +71,22 @@ namespace MiniAccountManagement.Web.Infrastructure.Seed
 
  var permissions = new List<ModulePermission>
 {
-    // Admin Full Access
+  
     NewPermission(adminRole.Id, "ChartOfAccounts", true, true, true, true),
-    NewPermission(adminRole.Id, "VoucherEntry", true, true, false, false), // Only View & Create
+    NewPermission(adminRole.Id, "VoucherEntry", true, true, false, false), 
     NewPermission(adminRole.Id, "UserManagement", true, true, true, true),
     NewPermission(adminRole.Id, "RoleManagement", true, true, true, true),
    
 
-    // Accountant Limited Access
+    
     NewPermission(accountantRole.Id, "ChartOfAccounts", true, true, true, false),
     NewPermission(accountantRole.Id, "VoucherEntry", true, true, false, false),
     NewPermission(accountantRole.Id, "UserManagement", false, false, false, false),
     NewPermission(accountantRole.Id, "RoleManagement", false, false, false, false),
     
 
-    // Viewer Minimal Access
-    NewPermission(viewerRole.Id, "ChartOfAccounts", true, false, false, false),  // Only list/view
+    
+    NewPermission(viewerRole.Id, "ChartOfAccounts", true, false, false, false), 
     NewPermission(viewerRole.Id, "VoucherEntry", false, false, false, false),
     NewPermission(viewerRole.Id, "UserManagement", false, false, false, false),
     NewPermission(viewerRole.Id, "RoleManagement", false, false, false, false),

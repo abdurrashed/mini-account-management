@@ -9,8 +9,9 @@ namespace MiniAccountManagement.Web.Domain.Services
 {
     public interface IRolePermissionService
     {
-        Task<List<ModulePermission>> GetPermissionsByRoleAsync(string roleId);
-        Task AssignPermissionAsync(ModulePermission permission);
-        Task RemovePermissionAsync(int permissionId);
+        Task<List<ModulePermission>> GetAllAsync();
+        Task<ModulePermission> GetByIdAsync(Guid id);
+        Task UpdateAsync(ModulePermission permission);
+        Task DeleteAsync(Guid id);
     }
 }

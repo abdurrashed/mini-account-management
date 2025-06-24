@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniAccountManagement.Web.Application.Services;
+using MiniAccountManagement.Web.Domain.Infrastructure;
 using MiniAccountManagement.Web.Domain.Repositories;
 using MiniAccountManagement.Web.Domain.Services;
 using MiniAccountManagement.Web.Infrastructure;
 using MiniAccountManagement.Web.Infrastructure.Identity;
+using MiniAccountManagement.Web.Infrastructure.Infrastructure;
 using MiniAccountManagement.Web.Infrastructure.Repositories;
 using MiniAccountManagement.Web.Infrastructure.Seed;
 using System;
@@ -34,6 +36,10 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IChartOfAccountRepository, ChartOfAccountRepository>();
 builder.Services.AddScoped<IChartOfAccountService, ChartOfAccountService>();
+
+builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+
+builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
 
 
 

@@ -1,0 +1,65 @@
+﻿
+@page
+@model MiniAccountManagement.Web.Pages.ManageRoles.ListPermissionsModel
+@{
+    ViewData["Title"] = "Module Permissions";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <a asp-page="AssignPermission" class="btn btn-primary mb-3">+ Create New Permission</a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>Role Name</th>
+                <th>Module Name</th>
+                <th>Can View</th>
+                <th>Can Create</th>
+                <th>Can Edit</th>
+                <th>Can Delete</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var perm in Model.Permissions)
+            {
+                <tr>
+                    <td>@perm.RoleName</td>
+                    <td>@perm.ModuleName</td>
+                    <td>
+                        <select disabled class="form-select form-select-sm">
+                            <option selected="@(perm.CanView ? "selected" : null)">Yes</option>
+                            <option selected="@(perm.CanView ? null : "selected")">No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select disabled class="form-select form-select-sm">
+                            <option selected="@(perm.CanCreate ? "selected" : null)">Yes</option>
+                            <option selected="@(perm.CanCreate ? null : "selected")">No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select disabled class="form-select form-select-sm">
+                            <option selected="@(perm.CanEdit ? "selected" : null)">Yes</option>
+                            <option selected="@(perm.CanEdit ? null : "selected")">No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select disabled class="form-select form-select-sm">
+                            <option selected="@(perm.CanDelete ? "selected" : null)">Yes</option>
+                            <option selected="@(perm.CanDelete ? null : "selected")">No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <a asp-page="EditPermission" asp-route-id="@perm.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@perm.Id" class="d-inline" onsubmit="return confirm('Are you sure to delete this permission?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
