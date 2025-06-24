@@ -27,14 +27,8 @@ namespace MiniAccountManagement.Web.Application.Services
 
         public Task<List<ModulePermission>> GetAllAsync() => _repository.GetAllAsync();
 
-        public Task<ModulePermission> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<ModulePermission> GetByIdAsync(Guid id) => _repository.GetByIdAsync(id);
 
-        public Task UpdateAsync(ModulePermission permission)
-        {
-            throw new NotImplementedException();
-        }
+        public Task UpdateAsync(ModulePermission permission) => _repository.UpdateAsync(permission);
     }
 }

@@ -32,9 +32,13 @@ namespace MiniAccountManagement.Web.Infrastructure.Infrastructure
                 .ToListAsync();
         }
 
-        public Task<ModulePermission> GetByIdAsync(Guid id)
+        public async Task<ModulePermission> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter("@Id", id);
+            var list = await _context.ModulePermissions
+                .FromSqlRaw("EXEC sp_GetModulePermissionById @Id", param)
+                .ToListAsync();
+            return list.Count > 0 ? list[0] : null;
         }
 
         public Task RemoveAsync(int permissionId)
@@ -42,9 +46,18 @@ namespace MiniAccountManagement.Web.Infrastructure.Infrastructure
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(ModulePermission permission)
+        public async Task UpdateAsync(ModulePermission permission)
         {
-            throw new NotImplementedException();
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC sp_UpdateModulePermission @Id, @RoleId, @ModuleName, @CanView, @CanCreate, @CanEdit, @CanDelete",
+                new SqlParameter("@Id", permission.Id),
+                new SqlParameter("@RoleId", permission.RoleId),
+                new SqlParameter("@ModuleName", permission.ModuleName),
+                new SqlParameter("@CanView", permission.CanView),
+                new SqlParameter("@CanCreate", permission.CanCreate),
+                new SqlParameter("@CanEdit", permission.CanEdit),
+                new SqlParameter("@CanDelete", permission.CanDelete)
+            );
         }
     }
 }

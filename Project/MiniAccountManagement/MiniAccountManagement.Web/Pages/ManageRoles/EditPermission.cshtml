@@ -1,0 +1,66 @@
+﻿@page "{id:guid}"
+@model MiniAccountManagement.Web.Pages.ManageRoles.EditPermissionModel
+@{
+    ViewData["Title"] = "Edit Permission";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form method="post">
+        <input type="hidden" asp-for="Permission.Id" />
+
+        <div class="mb-3">
+            <label asp-for="Permission.RoleId" class="form-label">Role</label>
+            <select asp-for="Permission.RoleId" class="form-select">
+                <option value="">-- Select Role --</option>
+                @foreach (var role in Model.Roles)
+                {
+                    <option value="@role.Id" selected="@(role.Id == Model.Permission.RoleId ? "selected" : null)">
+                        @role.Name
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Permission.ModuleName" class="form-label">Module Name</label>
+            <input asp-for="Permission.ModuleName" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can View</label>
+            <select asp-for="Permission.CanView" class="form-select">
+                <option value="true" selected="@(Model.Permission.CanView ? "selected" : null)">Yes</option>
+                <option value="false" selected="@(Model.Permission.CanView ? null : "selected")">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can Create</label>
+            <select asp-for="Permission.CanCreate" class="form-select">
+                <option value="true" selected="@(Model.Permission.CanCreate ? "selected" : null)">Yes</option>
+                <option value="false" selected="@(Model.Permission.CanCreate ? null : "selected")">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can Edit</label>
+            <select asp-for="Permission.CanEdit" class="form-select">
+                <option value="true" selected="@(Model.Permission.CanEdit ? "selected" : null)">Yes</option>
+                <option value="false" selected="@(Model.Permission.CanEdit ? null : "selected")">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can Delete</label>
+            <select asp-for="Permission.CanDelete" class="form-select">
+                <option value="true" selected="@(Model.Permission.CanDelete ? "selected" : null)">Yes</option>
+                <option value="false" selected="@(Model.Permission.CanDelete ? null : "selected")">No</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="ListPermissions" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
