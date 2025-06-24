@@ -20,9 +20,11 @@ namespace MiniAccountManagement.Web.Application.Services
             _repository = repository;
         }
 
-        public Task DeleteAsync(Guid id)
+        public Task DeleteAsync(Guid id) => _repository.DeleteAsync(id);
+
+        public async Task AssignPermissionAsync(ModulePermission permission)
         {
-            throw new NotImplementedException();
+            await _repository.AssignAsync(permission);
         }
 
         public Task<List<ModulePermission>> GetAllAsync() => _repository.GetAllAsync();

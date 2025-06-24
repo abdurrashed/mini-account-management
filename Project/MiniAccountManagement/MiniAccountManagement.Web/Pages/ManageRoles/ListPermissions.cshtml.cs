@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MiniAccountManagement.Web.Domain.Services;
 using MiniAccountManagement.Web.Infrastructure.Identity;
+using NuGet.Protocol.Core.Types;
 
 namespace MiniAccountManagement.Web.Pages.ManageRoles
 {
@@ -52,5 +53,7 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
             await _permissionService.DeleteAsync(id);
             return RedirectToPage();
         }
+
+       
     }
 }
