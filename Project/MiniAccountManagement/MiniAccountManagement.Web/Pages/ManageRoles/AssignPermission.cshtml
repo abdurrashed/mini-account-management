@@ -1,0 +1,68 @@
+﻿@page
+@model MiniAccountManagement.Web.Pages.ManageRoles.AssignPermissionModel
+@{
+    ViewData["Title"] = "Assign New Permission";
+}
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label fw-bold">Role</label>
+            <select asp-for="Permission.RoleId" class="form-select" asp-items="Model.RoleList">
+                <option value="">-- Select Role --</option>
+            </select>
+            <span asp-validation-for="Permission.RoleId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Module Name</label>
+            <input asp-for="Permission.ModuleName" class="form-control" placeholder="Enter module name" />
+            <span asp-validation-for="Permission.ModuleName" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can View</label>
+            <select asp-for="Permission.CanView" class="form-select">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can Create</label>
+            <select asp-for="Permission.CanCreate" class="form-select">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can Edit</label>
+            <select asp-for="Permission.CanEdit" class="form-select">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Can Delete</label>
+            <select asp-for="Permission.CanDelete" class="form-select">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="d-flex justify-content-end">
+            <a asp-page="ListPermissions" class="btn btn-outline-secondary me-2">Cancel</a>
+            <button type="submit" class="btn btn-primary">Assign Permission</button>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
