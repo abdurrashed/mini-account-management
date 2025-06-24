@@ -7,7 +7,9 @@
 <div class="container mt-4">
     <h2>@ViewData["Title"]</h2>
 
-    <a asp-page="AssignPermission" class="btn btn-primary mb-3">+ Create New Permission</a>
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-page="AssignPermission" class="btn btn-primary">+ Create New Permission</a>
+    </div>
 
     <form method="post" asp-page-handler="Delete">
         <input type="hidden" id="deletePermissionId" name="id" />
