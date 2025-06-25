@@ -15,6 +15,9 @@ namespace MiniAccountManagement.Web.Infrastructure
 
        public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
        public DbSet<ModulePermission> ModulePermissions { get; set; }
+
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<VoucherEntry> VoucherEntries { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
              : base(options)
         {
