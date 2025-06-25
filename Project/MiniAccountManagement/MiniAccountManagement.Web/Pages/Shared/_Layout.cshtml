@@ -159,9 +159,7 @@
                                         <li class="nav-item">
                                             <a asp-page="/ManageRoles/ListPermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permission List</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-page="/Admin/RolePermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permissions</a>
-                                        </li>
+                                       
                                     </ul>
                                 </div>
                             </li>
@@ -307,10 +305,9 @@
                             </a>
                             <div class="collapse" id="voucherMobile">
                                 <div class="ms-3">
-                                    <a asp-page="/Voucher/Journal" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Journal Voucher</a>
-                                    <a asp-page="/Voucher/Payment" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Payment Voucher</a>
-                                    <a asp-page="/Voucher/Receipt" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Receipt Voucher</a>
-                                    <a asp-page="/Voucher/List" class="nav-link text-white">All Vouchers</a>
+                                    <a asp-page="/Voucher/VoucherList" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher List</a>
+                                    <a asp-page="/Voucher/save" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher Create</a>
+                      
                                 </div>
                             </div>
                         </li>
@@ -356,11 +353,9 @@
                             <div class="collapse" id="manageRolesMenu">
                                 <ul class="nav flex-column ms-4 mt-2">
                                     <li class="nav-item">
-                                        <a asp-page="/Admin/Roles" class="nav-link text-white px-3 py-1 rounded-3">Role List</a>
+                                        <a asp-page="/ManageRoles/ListPermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permission List</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a asp-page="/Admin/RolePermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permissions</a>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                         </li>
