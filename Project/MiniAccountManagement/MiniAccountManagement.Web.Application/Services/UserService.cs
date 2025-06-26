@@ -25,7 +25,7 @@ namespace MiniAccountManagement.Web.Application.Services
 
         public Task<bool> DeleteUserAsync(string userId)
         {
-            throw new NotImplementedException();
+            return _userRepository.DeleteUserAsync(userId);
         }
 
         public Task<List<UserWithRolesDto>> GetAllUsersAsync()
@@ -35,12 +35,13 @@ namespace MiniAccountManagement.Web.Application.Services
 
         public Task<UserDto?> GetUserByIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetUserByIdAsync(userId);
         }
 
         public Task<bool> UpdateUserAsync(UserDto userDto)
         {
-            throw new NotImplementedException();
+            return _userRepository.UpdateUserAsync(userDto);
         }
+
     }
 }

@@ -31,7 +31,7 @@ namespace MiniAccountManagement.Web.Pages.ManageUsers
         {
             var success = await _userService.DeleteUserAsync(userId);
 
-            StatusMessage = success ? "User deleted successfully." : "Error deleting user.";
+            TempData["SuccessMessage"] = "User deleted successfully.";
 
             return RedirectToPage();
         }

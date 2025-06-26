@@ -28,9 +28,13 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteUserAsync(string userId)
+        public async Task<bool> DeleteUserAsync(string userId)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded;
         }
 
         public async Task<List<UserWithRolesDto>> GetAllUsersWithRolesAsync()
@@ -54,14 +58,42 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
             return list;
         }
 
-        public Task<UserDto?> GetUserByIdAsync(string userId)
+        public async Task<UserDto?> GetUserByIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return null;
+
+            var roles = await _userManager.GetRolesAsync(user);
+            return new UserDto
+            {
+                UserId = user.Id,
+                UserName = user.UserName ?? "",
+                Email = user.Email ?? "",
+                Role = roles.FirstOrDefault() ?? ""
+            };
         }
 
-        public Task<bool> UpdateUserAsync(UserDto userDto)
+        public async Task<bool> UpdateUserAsync(UserDto userDto)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userDto.UserId);
+            if (user == null) return false;
+
+            user.UserName = userDto.UserName;
+            user.Email = userDto.Email;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+                return false;
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var roleExists = await _roleManager.RoleExistsAsync(userDto.Role);
+            if (!roleExists) return false;
+
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeResult.Succeeded) return false;
+
+            var addResult = await _userManager.AddToRoleAsync(user, userDto.Role);
+            return addResult.Succeeded;
         }
     }
 }

@@ -6,9 +6,9 @@
 
 <h2>User List</h2>
 
-@if (!string.IsNullOrEmpty(Model.StatusMessage))
+@if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-info">@Model.StatusMessage</div>
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
 }
 
 <table class="table table-bordered">
@@ -28,7 +28,7 @@
                 <td>@user.Email</td>
                 <td>@string.Join(", ", user.Roles)</td>
                 <td>
-                    <a asp-page="./EditUser" asp-route-userId="@user.UserId" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-page="EditUser" asp-route-userId="@user.UserId" class="btn btn-sm btn-primary">Edit</a>
 
                     <!-- Delete button that opens the modal -->
                     <button type="button"

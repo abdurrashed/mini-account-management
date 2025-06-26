@@ -1,0 +1,43 @@
+﻿@page "{userId?}"
+@model MiniAccountManagement.Web.Pages.ManageUsers.EditUserModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+
+<h3>Edit User</h3>
+
+<form method="post">
+    <input type="hidden" asp-for="Input.UserId" />
+
+    <div class="mb-3">
+        <label asp-for="Input.UserName" class="form-label"></label>
+        <input asp-for="Input.UserName" class="form-control" />
+        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Email" class="form-label"></label>
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Role" class="form-label"></label>
+        <select asp-for="Input.Role" class="form-select">
+            <option value="">-- Select Role --</option>
+            @foreach (var role in Model.Roles)
+            {
+                <option value="@role" selected="@(role == Model.Input.Role ? "selected" : null)">@role</option>
+            }
+        </select>
+        <span asp-validation-for="Input.Role" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-page="UserList" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
