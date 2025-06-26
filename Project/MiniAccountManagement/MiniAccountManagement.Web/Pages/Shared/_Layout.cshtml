@@ -84,38 +84,15 @@
                         @if (isAdmin || isViewer || isAccountant)
                         {
                             <li class="nav-item mb-1">
-                                <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#voucherMenu" role="button" aria-expanded="false">
-                                    <i class="bi bi-receipt me-3 fs-5"></i>
-                                    <span class="flex-grow-1">Voucher Entry</span>
-                                    <i class="bi bi-chevron-down"></i>
+                                <a class="nav-link text-white" data-bs-toggle="collapse" href="#voucherMobile">
+                                    <i class="bi bi-receipt me-2"></i>Voucher Entry
                                 </a>
-                                <div class="collapse" id="voucherMenu">
-                                    <ul class="nav flex-column ms-4 mt-2">
-                                        <li class="nav-item">
-                                            <a asp-page="/Voucher/Journal" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-journal-text me-2"></i>
-                                                <span>Journal Voucher</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a asp-page="/Voucher/Payment" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-arrow-up-circle text-danger me-2"></i>
-                                                <span>Payment Voucher</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a asp-page="/Voucher/Receipt" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-arrow-down-circle text-success me-2"></i>
-                                                <span>Receipt Voucher</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a asp-page="/Voucher/List" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
-                                                <i class="bi bi-list-check me-2"></i>
-                                                <span>All Vouchers</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div class="collapse" id="voucherMobile">
+                                    <div class="ms-3">
+                                        <a asp-page="/Voucher/VoucherList" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher List</a>
+                                        <a asp-page="/Voucher/Create" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher Create</a>
+
+                                    </div>
                                 </div>
                             </li>
                         }
@@ -306,7 +283,7 @@
                             <div class="collapse" id="voucherMobile">
                                 <div class="ms-3">
                                     <a asp-page="/Voucher/VoucherList" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher List</a>
-                                    <a asp-page="/Voucher/save" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher Create</a>
+                                    <a asp-page="/Voucher/Create" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher Create</a>
                       
                                 </div>
                             </div>

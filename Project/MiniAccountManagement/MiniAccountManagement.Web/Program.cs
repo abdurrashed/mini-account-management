@@ -36,10 +36,10 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IChartOfAccountRepository, ChartOfAccountRepository>();
 builder.Services.AddScoped<IChartOfAccountService, ChartOfAccountService>();
-
+builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
-
 builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+builder.Services.AddScoped<IVoucherRepository,VoucherRepository>();
 
 
 
