@@ -41,7 +41,9 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
                 return Page();
             }
 
+
             await _permissionService.UpdateAsync(Permission);
+            TempData["SuccessMessage"] = "Permission edited successfully!";
             return RedirectToPage("ListPermissions");
         }
     }

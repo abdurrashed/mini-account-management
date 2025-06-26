@@ -70,6 +70,7 @@ namespace MiniAccountManagement.Web.Pages.Accounts
             };
 
             await _service.UpdateAccountAsync(account);
+            TempData["SuccessMessage"] = "Account updated successfully!";
 
             return RedirectToPage("Index");
         }

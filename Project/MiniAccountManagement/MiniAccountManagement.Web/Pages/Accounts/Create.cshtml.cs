@@ -44,6 +44,8 @@ namespace MiniAccountManagement.Web.Pages.Accounts
 
             await _service.CreateAccountAsync(Account);
 
+            TempData["SuccessMessage"] = "Account created successfully!";
+
             return RedirectToPage("Index");
         }
 

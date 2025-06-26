@@ -26,6 +26,7 @@ namespace MiniAccountManagement.Web.Pages.Accounts
             
 
             await _service.DeleteAccountAsync(id);
+            TempData["SuccessMessage"] = "Account deleted successfully!";
 
             return RedirectToPage(); 
         }

@@ -35,9 +35,14 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
             LoadRoles();
 
             if (!ModelState.IsValid)
+            {
+                TempData["ErrorMessage"] = "Validation error.";
                 return Page();
+            }
 
+           
             await _permissionService.AssignPermissionAsync(Permission);
+            TempData["SuccessMessage"] = "Assigned permission successfully!";
             return RedirectToPage("ListPermissions");
         }
 

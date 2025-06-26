@@ -56,7 +56,7 @@ namespace MiniAccountManagement.Web.Pages.Voucher
 
                 await _voucherService.SaveVoucherAsync(VoucherVM);
                 TempData["SuccessMessage"] = "Voucher saved successfully!";
-                return RedirectToPage("Index");
+                return Page();
             }
             catch (Exception ex)
             {

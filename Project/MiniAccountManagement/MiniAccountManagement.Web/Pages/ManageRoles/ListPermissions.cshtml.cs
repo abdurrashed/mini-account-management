@@ -51,6 +51,7 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
             await _permissionService.DeleteAsync(id);
+            TempData["SuccessMessage"] = "Permission deleted successfully!";
             return RedirectToPage();
         }
 
