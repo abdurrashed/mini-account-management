@@ -120,3 +120,4 @@ namespace MiniAccountManagement.Web.Pages.Account
             return Page();
         }  }
     }
+ 
