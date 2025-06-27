@@ -36,7 +36,12 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group mb-3">
                                     <label asp-for="Account.AccountType" class="form-label fw-bold"></label>
-                                    <input asp-for="Account.AccountType" class="form-control form-control-lg" />
+                                    <select asp-for="Account.AccountType" class="form-select form-select-lg">
+                                        <option value="">-- Select Type --</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Bank">Bank</option>
+                                        <option value="Receivable">Receivable</option>
+                                    </select>
                                     <span asp-validation-for="Account.AccountType" class="text-danger small"></span>
                                 </div>
                             </div>

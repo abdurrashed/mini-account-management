@@ -21,10 +21,16 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Account.AccountType"></label>
-        <input asp-for="Account.AccountType" class="form-control" />
+        <label asp-for="Account.AccountType" class="form-label fw-bold"></label>
+        <select asp-for="Account.AccountType" class="form-select">
+            <option value="">-- Select Type --</option>
+            <option value="Cash">Cash</option>
+            <option value="Bank">Bank</option>
+            <option value="Receivable">Receivable</option>
+        </select>
         <span asp-validation-for="Account.AccountType" class="text-danger"></span>
     </div>
+
 
     <div class="form-group">
         <label asp-for="Account.Description"></label>
