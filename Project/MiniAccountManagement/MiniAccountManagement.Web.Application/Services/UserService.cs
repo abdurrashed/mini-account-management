@@ -20,7 +20,7 @@ namespace MiniAccountManagement.Web.Application.Services
         }
         public Task<bool> CreateUserAsync(UserDto userDto)
         {
-            throw new NotImplementedException();
+            return _userRepository.CreateUserAsync(userDto);
         }
 
         public Task<bool> DeleteUserAsync(string userId)

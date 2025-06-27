@@ -19,8 +19,7 @@ namespace MiniAccountManagement.Web.Pages.ManageUsers
 
         public List<UserWithRolesDto> Users { get; set; } = new();
 
-        [TempData]
-        public string? StatusMessage { get; set; }
+       
 
         public async Task OnGetAsync()
         {

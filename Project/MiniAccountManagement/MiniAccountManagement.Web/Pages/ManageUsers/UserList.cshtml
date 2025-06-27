@@ -4,6 +4,10 @@
     ViewData["Title"] = "User List";
 }
 
+<div class="d-flex justify-content-end mb-1">
+    <a asp-page="CreateUser" class="btn btn-primary">+ Create New User</a>
+</div>
+
 <h2>User List</h2>
 
 @if (TempData["SuccessMessage"] != null)

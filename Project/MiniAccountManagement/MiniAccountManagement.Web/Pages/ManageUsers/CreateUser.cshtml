@@ -1,17 +1,12 @@
-﻿@page "{userId?}"
-@model MiniAccountManagement.Web.Pages.ManageUsers.EditUserModel
+﻿@page
+@model MiniAccountManagement.Web.Pages.ManageUsers.CreateUserModel
 @{
-    ViewData["Title"] = "Edit User";
+    ViewData["Title"] = "Create User";
 }
-
-
-<h3>Edit User</h3>
-
+<h3>Create New User</h3>
 
 
 <form method="post">
-    <input type="hidden" asp-for="Input.UserId" />
-
     <div class="mb-3">
         <label asp-for="Input.UserName" class="form-label"></label>
         <input asp-for="Input.UserName" class="form-control" />
@@ -25,19 +20,25 @@
     </div>
 
     <div class="mb-3">
+        <label asp-for="Input.Password" class="form-label"></label>
+        <input asp-for="Input.Password" type="password" class="form-control" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
         <label asp-for="Input.Role" class="form-label"></label>
         <select asp-for="Input.Role" class="form-select">
             <option value="">-- Select Role --</option>
             @foreach (var role in Model.Roles)
             {
-                <option value="@role" selected="@(role == Model.Input.Role ? "selected" : null)">@role</option>
+                <option value="@role">@role</option>
             }
         </select>
         <span asp-validation-for="Input.Role" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
-    <a asp-page="UserList" class="btn btn-secondary">Back</a>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a asp-page="UserList" class="btn btn-secondary">Back to List</a>
 </form>
 
 @section Scripts {

@@ -23,9 +23,22 @@ namespace MiniAccountManagement.Web.Infrastructure.Repositories
             _roleManager = roleManager;
         }
 
-        public Task<bool> CreateUserAsync(UserDto userDto)
+        public async Task<bool> CreateUserAsync(UserDto userDto)
         {
-            throw new NotImplementedException();
+            var user = new ApplicationUser
+            {
+                UserName = userDto.UserName,
+                Email = userDto.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, userDto.Password);
+            if (!result.Succeeded) return false;
+
+            if (!await _roleManager.RoleExistsAsync(userDto.Role))
+                return false;
+
+            var roleResult = await _userManager.AddToRoleAsync(user, userDto.Role);
+            return roleResult.Succeeded;
         }
 
         public async Task<bool> DeleteUserAsync(string userId)
