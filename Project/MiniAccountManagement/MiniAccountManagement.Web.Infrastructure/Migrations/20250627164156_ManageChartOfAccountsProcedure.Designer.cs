@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniAccountManagement.Web.Infrastructure;
 
@@ -11,9 +12,11 @@ using MiniAccountManagement.Web.Infrastructure;
 namespace MiniAccountManagement.Web.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250627164156_ManageChartOfAccountsProcedure")]
+    partial class ManageChartOfAccountsProcedure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,16 +160,6 @@ namespace MiniAccountManagement.Web.Infrastructure.Migrations
                     b.HasIndex("ParentAccountId");
 
                     b.ToTable("ChartOfAccounts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4094b656-e07b-4670-8dfd-d717d57b4f74"),
-                            AccountCode = "1001",
-                            AccountName = "Rashed",
-                            AccountType = "Cash",
-                            Description = "Cash Account"
-                        });
                 });
 
             modelBuilder.Entity("MiniAccountManagement.Web.Domain.Entities.ModulePermission", b =>

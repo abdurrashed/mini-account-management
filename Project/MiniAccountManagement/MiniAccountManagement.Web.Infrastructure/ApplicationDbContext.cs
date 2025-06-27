@@ -37,9 +37,27 @@ namespace MiniAccountManagement.Web.Infrastructure
                 .WithMany(c => c.Children)
                 .HasForeignKey(a => a.ParentAccountId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<ChartOfAccount>().HasData(new ChartOfAccount
+            {
+                Id = Guid.Parse("4094B656-E07B-4670-8DFD-D717D57B4F74"),
+                AccountName = "Rashed",
+                AccountCode = "1001",
+                AccountType = "Cash",
+                Description = "Cash Account",
+                ParentAccountId = null
+            });
+        }
+
+
+
+
+
+
         }
 
 
 
     }
-}
+
