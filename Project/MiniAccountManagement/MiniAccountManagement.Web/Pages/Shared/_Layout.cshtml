@@ -2,6 +2,12 @@
 @using MiniAccountManagement.Web.Infrastructure.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject MiniAccountManagement.Web.Domain.Services.IPermissionService PermissionService
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var userId = user?.Id;
+}
 
 @{
     var isAdmin = User.IsInRole("Admin");
@@ -48,8 +54,7 @@
                             </a>
                         </li>
 
-                        <!-- Chart of Accounts Module -->
-                        @if (isAdmin || isViewer || isAccountant)
+                        @if (await PermissionService.HasPermissionAsync(userId, "ChartOfAccounts", "View"))
                         {
                             <li class="nav-item mb-1">
                                 <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#chartOfAccountsMenu" role="button" aria-expanded="false">
@@ -65,8 +70,7 @@
                                                 <span>Account List</span>
                                             </a>
                                         </li>
-                                        @if (isAdmin || isViewer || isAccountant)
-                                        {
+                                       
                                             <li class="nav-item">
                                                 <a asp-page="/Accounts/Create" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
                                                     <i class="bi bi-plus-circle me-2"></i>
@@ -74,17 +78,14 @@
                                                 </a>
                                             </li>
                                         
-                                        }
                                     </ul>
                                 </div>
                             </li>
                         }
 
-                        <!-- Voucher Entry Module -->
-                        @if (isAdmin || isViewer || isAccountant)
+                        @if (await PermissionService.HasPermissionAsync(userId, "VoucherEntry", "View"))
                         {
                             <li class="nav-item mb-1">
-                              
                                 <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#voucherMobile" role="button" aria-expanded="false">
                                     <i class="bi bi-people me-3 fs-5"></i>
                                     <span class="flex-grow-1">Voucher Entry</span>
@@ -92,18 +93,15 @@
                                 </a>
                                 <div class="collapse" id="voucherMobile">
                                     <div class="ms-3">
-                                        <a asp-page="/Voucher/Create" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher Create</a>
-
+                                        <a asp-page="/Voucher/Create" class="nav-link text-white px-3 py-1 rounded-3 ">Voucher Create</a>
                                     </div>
                                 </div>
                             </li>
                         }
 
 
-                        <!-- User Management (Admin Only) -->
-                        @if (isAdmin)
+                        @if (await PermissionService.HasPermissionAsync(userId, "UserManagement", "View"))
                         {
-                            <!-- Manage Users (Independent) -->
                             <li class="nav-item mb-1">
                                 <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageUsersMenu" role="button" aria-expanded="false">
                                     <i class="bi bi-people me-3 fs-5"></i>
@@ -115,16 +113,16 @@
                                         <li class="nav-item">
                                             <a asp-page="/ManageUsers/CreateUser" class="nav-link text-white px-3 py-1 rounded-3">Create User</a>
                                         </li>
-
                                         <li class="nav-item">
                                             <a asp-page="/ManageUsers/UserList" class="nav-link text-white px-3 py-1 rounded-3">Users</a>
                                         </li>
-                                        
                                     </ul>
                                 </div>
                             </li>
+                        }
 
-                            <!-- Manage Roles (Independent) -->
+                        @if (await PermissionService.HasPermissionAsync(userId, "RoleManagement", "View"))
+                        {
                             <li class="nav-item mb-1">
                                 <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageRolesMenu" role="button" aria-expanded="false">
                                     <i class="bi bi-person-badge me-3 fs-5"></i>
@@ -137,13 +135,13 @@
                                             <a asp-page="/ManageRoles/ListPermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permission List</a>
                                             <a asp-page="/ManageRoles/AssignPermission" class="nav-link text-white px-3 py-1 rounded-3">Assign Permission</a>
                                         </li>
-                                       
                                     </ul>
                                 </div>
                             </li>
+                        }
 
                           
-                        }
+                        
 
 
                     </ul>
@@ -263,30 +261,31 @@
                         </a>
                     </li>
 
-                    @if (isAdmin || isAccountant || isViewer)
+                    @if (await PermissionService.HasPermissionAsync(userId, "ChartOfAccounts", "View"))
                     {
                         <li class="nav-item mb-1">
-                            <a class="nav-link text-white" data-bs-toggle="collapse" href="#chartOfAccountsMobile">
-                                <i class="bi bi-diagram-3 me-2"></i>Chart of Accounts
+                            <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#chartOfAccountsMenu" role="button" aria-expanded="false">
+                                <i class="bi bi-diagram-3 me-3 fs-5"></i>
+                                <span class="flex-grow-1">Chart of Accounts</span>
+                                <i class="bi bi-chevron-down"></i>
                             </a>
-                            <div class="collapse" id="chartOfAccountsMobile">
-                                <div class="ms-3">
-                                    <a asp-page="/Accounts/Index" class="nav-link text-white">Account List</a>
-                                    <a asp-page="/Accounts/Create" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Create Account</a>
-                                   
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item mb-1">
-                            <a class="nav-link text-white" data-bs-toggle="collapse" href="#voucherMobile">
-                                <i class="bi bi-receipt me-2"></i>Voucher Entry
-                            </a>
-                            <div class="collapse" id="voucherMobile">
-                                <div class="ms-3">
-                         
-                                    <a asp-page="/Voucher/Create" class="nav-link text-white @(isViewer ? "disabled-link" : "")">Voucher Create</a>
-                      
-                                </div>
+                            <div class="collapse" id="chartOfAccountsMenu">
+                                <ul class="nav flex-column ms-4 mt-2">
+                                    <li class="nav-item">
+                                        <a asp-page="/Accounts/Index" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
+                                            <i class="bi bi-list-ul me-2"></i>
+                                            <span>Account List</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a asp-page="/Accounts/Create" class="nav-link text-white px-3 py-2 rounded-3 d-flex align-items-center">
+                                            <i class="bi bi-plus-circle me-2"></i>
+                                            <span>Create Account</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </div>
                         </li>
                     }
@@ -294,9 +293,10 @@
 
 
 
-                    @if (isAdmin)
+
+
+                    @if (await PermissionService.HasPermissionAsync(userId, "UserManagement", "View"))
                     {
-                        <!-- Manage Users (Independent) -->
                         <li class="nav-item mb-1">
                             <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageUsersMenu" role="button" aria-expanded="false">
                                 <i class="bi bi-people me-3 fs-5"></i>
@@ -305,38 +305,38 @@
                             </a>
                             <div class="collapse" id="manageUsersMenu">
                                 <ul class="nav flex-column ms-4 mt-2">
-                                   
                                     <li class="nav-item">
                                         <a asp-page="/ManageUsers/CreateUser" class="nav-link text-white px-3 py-1 rounded-3">Create User</a>
                                     </li>
-                                  
                                     <li class="nav-item">
                                         <a asp-page="/ManageUsers/UserList" class="nav-link text-white px-3 py-1 rounded-3">Users</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-
-                        <!-- Manage Roles (Independent) -->
-                        <li class="nav-item mb-1">
-                            <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageRolesMenu" role="button" aria-expanded="false">
-                                <i class="bi bi-person-badge me-3 fs-5"></i>
-                                <span class="flex-grow-1">Manage Roles</span>
-                                <i class="bi bi-chevron-down"></i>
-                            </a>
-                            <div class="collapse" id="manageRolesMenu">
-                                <ul class="nav flex-column ms-4 mt-2">
-                                    <li class="nav-item">
-                                        <a asp-page="/ManageRoles/ListPermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permission List</a>
-                                        <a asp-page="/ManageRoles/AssignPermission" class="nav-link text-white px-3 py-1 rounded-3">Assign Permission</a>
-                                    </li>
-                                   
-                                </ul>
-                            </div>
-                        </li>
-
-
                     }
+
+                        @if (await PermissionService.HasPermissionAsync(userId, "RoleManagement", "View"))
+                        {
+                            <li class="nav-item mb-1">
+                                <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#manageRolesMenu" role="button" aria-expanded="false">
+                                    <i class="bi bi-person-badge me-3 fs-5"></i>
+                                    <span class="flex-grow-1">Manage Roles</span>
+                                    <i class="bi bi-chevron-down"></i>
+                                </a>
+                                <div class="collapse" id="manageRolesMenu">
+                                    <ul class="nav flex-column ms-4 mt-2">
+                                        <li class="nav-item">
+                                            <a asp-page="/ManageRoles/ListPermissions" class="nav-link text-white px-3 py-1 rounded-3">Role Permission List</a>
+                                            <a asp-page="/ManageRoles/AssignPermission" class="nav-link text-white px-3 py-1 rounded-3">Assign Permission</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+
+                    
                 </ul>
             </div>
         </div>
