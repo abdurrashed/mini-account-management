@@ -316,6 +316,23 @@
                         </li>
                     }
 
+
+                    @if (await PermissionService.HasPermissionAsync(userId, "VoucherEntry", "View"))
+                    {
+                        <li class="nav-item mb-1">
+                            <a class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3" data-bs-toggle="collapse" href="#voucherMobile" role="button" aria-expanded="false">
+                                <i class="bi bi-people me-3 fs-5"></i>
+                                <span class="flex-grow-1">Voucher Entry</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
+                            <div class="collapse" id="voucherMobile">
+                                <div class="ms-3">
+                                    <a asp-page="/Voucher/Create" class="nav-link text-white px-3 py-1 rounded-3 ">Voucher Create</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
                         @if (await PermissionService.HasPermissionAsync(userId, "RoleManagement", "View"))
                         {
                             <li class="nav-item mb-1">

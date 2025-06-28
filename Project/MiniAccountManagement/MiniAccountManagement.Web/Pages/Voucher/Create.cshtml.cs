@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MiniAccountManagement.Web.Application.Services;
 using MiniAccountManagement.Web.Domain.Entities;
 using MiniAccountManagement.Web.Domain.Services;
+using MiniAccountManagement.Web.Infrastructure.Identity;
 
 namespace MiniAccountManagement.Web.Pages.Voucher
 {
@@ -10,11 +12,16 @@ namespace MiniAccountManagement.Web.Pages.Voucher
     {
         private readonly IVoucherService _voucherService;
         private readonly IChartOfAccountService _accountService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPermissionService _permissionService;
 
-        public CreateModel(IVoucherService voucherService, IChartOfAccountService accountService)
+        public CreateModel(IVoucherService voucherService, IChartOfAccountService accountService,IPermissionService permissionService, UserManager<ApplicationUser> userManager)
         {
             _voucherService = voucherService;
             _accountService = accountService;
+            _userManager = userManager;
+            _permissionService = permissionService;
+
         }
 
         [BindProperty]
@@ -22,8 +29,24 @@ namespace MiniAccountManagement.Web.Pages.Voucher
 
         public List<ChartOfAccount> Accounts { get; set; } = new();
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["AccessDenied"] = "User not found or not logged in.";
+                return RedirectToPage("/Index");
+            }
+
+            var userId = user.Id;
+            var hasPermission = await _permissionService.HasPermissionAsync(userId, "UserManagement", "Create");
+
+            if (!hasPermission)
+            {
+                TempData["AccessDenied"] = "You do not have permission to perform this action.";
+                return RedirectToPage("/Index");
+            }
             Accounts = await _accountService.GetAllAsync();
 
             if (VoucherVM.Entries.Count == 0)
@@ -33,6 +56,7 @@ namespace MiniAccountManagement.Web.Pages.Voucher
             {
                 VoucherVM.Date = DateTime.Today;
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

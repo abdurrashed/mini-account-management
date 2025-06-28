@@ -1,8 +1,11 @@
-﻿@model (MiniAccountManagement.Web.Domain.Entities.ChartOfAccount Account, int Level)
+﻿@model (MiniAccountManagement.Web.Domain.Entities.ChartOfAccount Account, int Level, bool CanEdit, bool CanDelete)
+
 
 @{
     var account = Model.Account;
     var level = Model.Level;
+    var canEdit = Model.CanEdit;
+    var canDelete = Model.CanDelete;
     var indent = new string('-', level * 2); 
     var rowClass = level == 0 ? "fw-bold text-primary" : "text-secondary";
     var paddingClass = level == 0 ? "" : $"ps-{level * 2}";
@@ -15,12 +18,20 @@
     <td class="text-muted small">@account.Description</td>
     <td class="text-center">
         <div class="btn-group" role="group">
-            <a asp-page="Edit" asp-route-id="@account.Id" class="btn btn-outline-warning btn-sm">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('@account.Id')">
-                <i class="fas fa-trash"></i> Delete
-            </button>
+             @if (canEdit)
+            {
+                <a asp-page="Edit" asp-route-id="@account.Id" class="btn btn-outline-warning btn-sm">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+
+            }
+           
+            @if (canDelete)
+            {
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('@account.Id')">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            }
         </div>
     </td>
 </tr>
@@ -29,6 +40,6 @@
 {
     foreach (var child in account.Children)
     {
-        @Html.Partial("_AccountRow", (child, level + 1))
+        @Html.Partial("_AccountRow", (child, level + 1, canEdit, canDelete))
     }
 }
