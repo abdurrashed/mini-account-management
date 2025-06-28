@@ -1,10 +1,8 @@
 ﻿
-
-
 @page
 @model MiniAccountManagement.Web.Pages.Account.LoginModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Sign In";
 }
 
 <div class="container mt-5" style="max-width: 500px;">
@@ -43,12 +41,24 @@
 
                 <!-- Submit -->
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
                 </div>
             </form>
         </div>
     </div>
+    <div class="mt-5 text-muted" style="font-size: 0.9rem;">
+        <ul>
+            <li><strong>Admin</strong> — Username: <code>admin123</code>, Password: <code>Admin@User@123</code></li>
+            <li><strong>Accountant</strong> — Username: <code>accountant123</code>, Password: <code>Accountant@123</code></li>
+        </ul>
+
+        <p>Note: Users who register will be assigned the Viewer role by default.</p>
+    </div>
+
+
 </div>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

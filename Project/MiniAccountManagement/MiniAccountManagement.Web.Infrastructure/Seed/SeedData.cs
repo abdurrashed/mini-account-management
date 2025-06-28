@@ -44,7 +44,7 @@ namespace MiniAccountManagement.Web.Infrastructure.Seed
                     Email = "admin@qtec.com",
                     EmailConfirmed = true
                 };
-                await userManager.CreateAsync(adminUser, "admin@123");
+                await userManager.CreateAsync(adminUser, "Admin@User@123");
                 await userManager.AddToRoleAsync(adminUser, "Admin");
             }
 

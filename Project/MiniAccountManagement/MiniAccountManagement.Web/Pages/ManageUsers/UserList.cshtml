@@ -5,7 +5,10 @@
 }
 
 <div class="d-flex justify-content-end mb-1">
-    <a asp-page="CreateUser" class="btn btn-primary">+ Create New User</a>
+    @if (Model.CanCreate)
+    {
+        <a asp-page="CreateUser" class="btn btn-primary">+ Create New User</a>
+    }
 </div>
 
 <h2>User List</h2>
@@ -32,17 +35,22 @@
                 <td>@user.Email</td>
                 <td>@string.Join(", ", user.Roles)</td>
                 <td>
-                    <a asp-page="EditUser" asp-route-userId="@user.UserId" class="btn btn-sm btn-primary">Edit</a>
+                    @if (Model.CanEdit)
+                    {
+                        <a asp-page="EditUser" asp-route-userId="@user.UserId" class="btn btn-sm btn-primary">Edit</a>
+                    }
 
-                    <!-- Delete button that opens the modal -->
-                    <button type="button"
-                            class="btn btn-sm btn-danger"
-                            data-bs-toggle="modal"
-                            data-bs-target="#deleteModal"
-                            data-user-id="@user.UserId"
-                            data-user-name="@user.UserName">
-                        Delete
-                    </button>
+                    @if (Model.CanDelete)
+                    {
+                        <button type="button"
+                                class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteModal"
+                                data-user-id="@user.UserId"
+                                data-user-name="@user.UserName">
+                            Delete
+                        </button>
+                    }
                 </td>
             </tr>
         }

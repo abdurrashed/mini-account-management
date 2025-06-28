@@ -40,7 +40,7 @@ namespace MiniAccountManagement.Web.Pages.Voucher
             }
 
             var userId = user.Id;
-            var hasPermission = await _permissionService.HasPermissionAsync(userId, "UserManagement", "Create");
+            var hasPermission = await _permissionService.HasPermissionAsync(userId, "VoucherEntry", "Create");
 
             if (!hasPermission)
             {
