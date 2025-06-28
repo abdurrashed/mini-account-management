@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MiniAccountManagement.Web.Application.Services;
 using MiniAccountManagement.Web.Domain.Entities;
 using MiniAccountManagement.Web.Domain.Services;
 using MiniAccountManagement.Web.Infrastructure.Identity;
@@ -11,12 +12,16 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
     public class AssignPermissionModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly IRolePermissionService _permissionService;
+        private readonly IRolePermissionService _RolepermissionService;
+        private readonly IPermissionService _permissionService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AssignPermissionModel(RoleManager<ApplicationRole> roleManager, IRolePermissionService permissionService)
+        public AssignPermissionModel(RoleManager<ApplicationRole> roleManager, IPermissionService permissionService , UserManager<ApplicationUser> userManager, IRolePermissionService  RolepermissionService)
         {
             _roleManager = roleManager;
+            _RolepermissionService = RolepermissionService;
             _permissionService = permissionService;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -24,11 +29,29 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
 
         public SelectList RoleList { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["AccessDenied"] = "User not found or not logged in.";
+                return RedirectToPage("/Index");
+            }
+
+            var userId = user.Id;
+            var hasPermission = await _permissionService.HasPermissionAsync(userId, "RoleManagement", "Create");
+
+            if (!hasPermission)
+            {
+                TempData["AccessDenied"] = "You do not have permission to perform this action.";
+                return RedirectToPage("/Index");
+            }
+
             LoadRoles();
             Permission = new ModulePermission();
+            return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -41,7 +64,7 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
             }
 
            
-            await _permissionService.AssignPermissionAsync(Permission);
+            await _RolepermissionService.AssignPermissionAsync(Permission);
             TempData["SuccessMessage"] = "Assigned permission successfully!";
             return RedirectToPage("ListPermissions");
         }

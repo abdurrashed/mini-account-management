@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MiniAccountManagement.Web.Domain.DTOS;
 using MiniAccountManagement.Web.Domain.Services;
 using MiniAccountManagement.Web.Infrastructure.Identity;
+using MiniAccountManagement.Web.Application.Services;
 
 namespace MiniAccountManagement.Web.Pages.ManageUsers
 {
@@ -13,12 +14,14 @@ namespace MiniAccountManagement.Web.Pages.ManageUsers
         private readonly IUserService _userService;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPermissionService _permissionService;
 
-        public CreateUserModel(IUserService userService, RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
+        public CreateUserModel(IUserService userService, RoleManager<ApplicationRole> roleManager, IPermissionService permissionService ,UserManager<ApplicationUser> userManager)
         {
             _userService = userService;
             _roleManager = roleManager;
             _userManager = userManager;
+            _permissionService = permissionService;
            
         }
 
@@ -44,10 +47,28 @@ namespace MiniAccountManagement.Web.Pages.ManageUsers
             public string Role { get; set; } = "";
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["AccessDenied"] = "User not found or not logged in.";
+                return RedirectToPage("/Index");
+            }
+
+            var userId = user.Id;
+            var hasPermission = await _permissionService.HasPermissionAsync(userId, "UserManagement", "Create");
+
+            if (!hasPermission)
+            {
+                TempData["AccessDenied"] = "You do not have permission to perform this action.";
+                return RedirectToPage("/Index");
+            }
+
             Roles = _roleManager.Roles.Select(r => r.Name).ToList();
+            return Page(); 
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
