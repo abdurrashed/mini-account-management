@@ -112,9 +112,6 @@
                         </div>
 
                         <div class="d-flex justify-content-end mt-4 gap-2">
-                            <button type="button" class="btn btn-outline-secondary">
-                                <i class="fas fa-times me-1"></i>Cancel
-                            </button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-1"></i>Save Voucher
                             </button>
@@ -152,19 +149,23 @@
         {
             <text><option value="@account.AccountName">@account.AccountName</option></text>
         }
-            `;
+            
+        $('#addRow').on('click', function () {
+            var index = $('#entriesTable tbody tr').length;
+            var rowNode = table.row.add([
+                `<select name="VoucherVM.Entries[${index}].AccountName" class="form-select account-dropdown">${accountOptions}</select>`,
+                `<input name="VoucherVM.Entries[${index}].Debit" class="form-control debit-input text-end" type="number" step="0.01" min="0" placeholder="0.00" />`,
+                `<input name="VoucherVM.Entries[${index}].Credit" class="form-control credit-input text-end" type="number" step="0.01" min="0" placeholder="0.00" />`,
+                `<div class="text-center">
+                    <button type="button" class="btn btn-sm btn-danger remove-row" title="Delete">
+                        Delete
+                    </button>
+                 </div>`
+            ]).draw(false).node();
 
-            $('#addRow').on('click', function () {
-                var index = $('#entriesTable tbody tr').length;
-                var rowNode = table.row.add([
-                    `<select name="VoucherVM.Entries[${index}].AccountName" class="form-select account-dropdown">${accountOptions}</select>`,
-                    `<input name="VoucherVM.Entries[${index}].Debit" class="form-control debit-input text-end" type="number" step="0.01" min="0" placeholder="0.00" />`,
-                    `<input name="VoucherVM.Entries[${index}].Credit" class="form-control credit-input text-end" type="number" step="0.01" min="0" placeholder="0.00" />`,
-                    `<button type="button" class="btn btn-outline-danger btn-sm remove-row"><i class="fas fa-trash"></i></button>`
-                ]).draw(false).node();
+            $(rowNode).find('select').focus();
+        });
 
-                $(rowNode).find('select').focus();
-            });
 
             $('#entriesTable tbody').on('click', '.remove-row', function () {
                 table.row($(this).parents('tr')).remove().draw();

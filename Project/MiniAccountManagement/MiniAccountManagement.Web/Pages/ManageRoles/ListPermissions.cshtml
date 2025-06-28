@@ -7,9 +7,12 @@
 <div class="container mt-4">
     <h2>@ViewData["Title"]</h2>
 
-    <div class="d-flex justify-content-end mb-3">
-        <a asp-page="AssignPermission" class="btn btn-primary">+ Create New Permission</a>
-    </div>
+    @if (Model.CanCreate)
+    {
+        <div class="d-flex justify-content-end mb-3">
+            <a asp-page="AssignPermission" class="btn btn-primary">+ Create New Permission</a>
+        </div>
+    }
 
   
     @if (TempData["SuccessMessage"] != null)
@@ -87,12 +90,19 @@
                             </select>
                         </td>
                         <td>
-                            <a asp-page="EditPermission" asp-route-id="@perm.Id" class="btn btn-sm btn-warning me-1">Edit</a>
-                            <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="confirmDelete('@perm.Id')">
-                                Delete
-                            </button>
+                            @if (Model.CanEdit)
+                            {
+                                <a asp-page="EditPermission" asp-route-id="@perm.Id" class="btn btn-sm btn-warning me-1">Edit</a>
+                            }
+                            @if (Model.CanDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        onclick="confirmDelete('@perm.Id')">
+                                    Delete
+                                </button>
+                            }
                         </td>
+
                     </tr>
                 }
             </tbody>

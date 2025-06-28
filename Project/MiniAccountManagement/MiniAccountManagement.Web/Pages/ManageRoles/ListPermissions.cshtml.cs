@@ -7,10 +7,12 @@ using NuGet.Protocol.Core.Types;
 
 namespace MiniAccountManagement.Web.Pages.ManageRoles
 {
-    public class ListPermissionsModel(IRolePermissionService permissionService, RoleManager<ApplicationRole> roleManager) : PageModel
+    public class ListPermissionsModel(IRolePermissionService RolepermissionService,IPermissionService permissionService, UserManager<ApplicationUser> usermanager, RoleManager<ApplicationRole> roleManager) : PageModel
     {
-        private readonly IRolePermissionService _permissionService = permissionService;
+        private readonly IRolePermissionService _RolepermissionService = RolepermissionService;
         private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
+        private readonly UserManager<ApplicationUser> _userManager = usermanager;
+        private readonly IPermissionService _permissionService = permissionService;
 
         public class PermissionViewModel
         {
@@ -25,10 +27,26 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
         }
 
         public List<PermissionViewModel> Permissions { get; set; }
+        public bool CanCreate { get; set; }
+        public bool CanEdit { get; set; }
+        public bool CanDelete { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var perms = await _permissionService.GetAllAsync();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["AccessDenied"] = "User not found or not logged in.";
+                return RedirectToPage("/Index");
+            }
+
+            var userId = user.Id;
+            CanCreate = await _permissionService.HasPermissionAsync(userId, "RoleManagement", "Create");
+            CanEdit = await _permissionService.HasPermissionAsync(userId, "RoleManagement", "Edit");
+            CanDelete = await _permissionService.HasPermissionAsync(userId, "RoleManagement", "Delete");
+
+
+            var perms = await _RolepermissionService.GetAllAsync();
             var roles = _roleManager.Roles.ToList();
 
             Permissions = perms.Select(p =>
@@ -46,11 +64,12 @@ namespace MiniAccountManagement.Web.Pages.ManageRoles
                     CanDelete = p.CanDelete
                 };
             }).ToList();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
-            await _permissionService.DeleteAsync(id);
+            await _RolepermissionService.DeleteAsync(id);
             TempData["SuccessMessage"] = "Permission deleted successfully!";
             return RedirectToPage();
         }
