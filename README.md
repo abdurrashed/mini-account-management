@@ -17,3 +17,9 @@ Go to Tools → NuGet Package Manager → Package Manager Console
 Run the following command:
 
 Update-Database -Project MiniAccountManagement.Web.Infrastructure -StartupProject MiniAccountManagement.Web
+
+
+
+Author: Md Abdur Rashed
+Email: rashedroni3@gmail.com
+Phone: 01882332451
